@@ -352,8 +352,7 @@ void SetGameSettings(Game& game)
         game.speed = 20.f;
     }
 
-    // нопедекъер яйнпнярэ хцпш б гюбхяхлнярх нр бшапюммни якнфмнярх.
-    // рн опнхгбндхряъ гюдепфйю яйюфел дн 200 ля, онйю явервхй ме мюонкмхряъ дн менаундхлнцн йнкхвеярбю вепег йюйне рн йнкхвеярбн жхйкнб. 
+    // TRANSFORM SNAKE SPEED AFTER DIFFUCULT CHANGES (FRAME-LATENCY. EASY 200 MS, HARD 100 MS AND ETC) 
     game.stepDelay = std::max(0.05f, 0.3f - (game.speed * 0.01f));
 }
 

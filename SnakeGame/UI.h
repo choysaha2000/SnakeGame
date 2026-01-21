@@ -44,7 +44,6 @@ enum class Cin
 
 struct UI
 {
-	// шрифт
 	sf::Font font;
 
 
@@ -102,7 +101,7 @@ struct UI
 
 void initText(UI& ui, Game& game);
 void DrawPlayingUI(UI& ui, Game& game, sf::RenderWindow& window);
-// сортировщик leaderboard по ключам
+
 std::string GetLeaderboardString(const std::unordered_map<std::string, int>& records);
 void InitializeLeaderBoard(UI& ui);
 

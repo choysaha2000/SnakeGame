@@ -20,8 +20,8 @@ enum class SnakePart
 	Tail
 };
 
-// ахрнбюъ люяйю янедхмемхи яецлемрю глех я яняедълх 
-// хяонкэгсеряъ дкъ бшанпю опюбхкэмни рейярспш
+// MASK FOR SEGMENTS CONNECTION 
+// USED TO RIGHT TEXTURE FOR SEGMENTS
 enum ConnectionMask : uint8_t
 {
 	NONE = 0b0000,

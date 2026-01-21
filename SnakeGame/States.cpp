@@ -323,7 +323,7 @@ void StartMenuState(UI& ui)
 	ui.menuItems.push_back({ tLeader, MenuItem::Leaderboard });
 	ui.menuItems.push_back({ tExit, MenuItem::Exit });
 
-	ui.menuIndex = 0; // яапюяшбюел дн мскебнцн щкелемрю люяяхю лемч (START)
+	ui.menuIndex = 0; // START INDEX IN ZERO ELEMENT 
 
 }
 void UpdateMenuState(Game& game, float deltaTime)
