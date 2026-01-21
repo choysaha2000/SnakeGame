@@ -20,6 +20,8 @@ enum class SnakePart
 	Tail
 };
 
+// ахрнбюъ люяйю янедхмемхи яецлемрю глех я яняедълх 
+// хяонкэгсеряъ дкъ бшанпю опюбхкэмни рейярспш
 enum ConnectionMask : uint8_t
 {
 	NONE = 0b0000,

@@ -13,7 +13,7 @@ enum class MenuItem {
 	Diffucult,
 	Options,
 	Exit,
-	Count 
+	Count
 };
 
 enum class Options
@@ -44,14 +44,21 @@ enum class Cin
 
 struct UI
 {
+	// шрифт
 	sf::Font font;
+
+
 	sf::Text scoreText;
-	sf::Text controlsHintText;
+	//sf::Text controlsHintText;
+
+	// game over
 	sf::Text gameOverText;
 	sf::Text gameOverScoreText;
-	sf::Text restartControl;
-	sf::Text BacktoMenuControl;
 
+	// pause
+	//sf::Text BacktoMenuControl;
+
+	// pause, ingame text
 	sf::Text PlayerRecord;
 
 	// menu
@@ -59,7 +66,6 @@ struct UI
 	sf::Text startText;
 	sf::Text leaderboard;
 	sf::Text exitText;
-	
 
 	// pause
 	sf::Text PauseMenuPlay;
@@ -71,20 +77,22 @@ struct UI
 	sf::Text BackToMenu;
 	std::unordered_map<std::string, int> recordsTable;
 
+	// menuItems
 	std::vector<std::pair<sf::Text, MenuItem>> menuItems;
 	int menuIndex = 0;
 
+	// Options Items
 	std::vector<std::pair<sf::Text, Options>> optionItems;
 	int optionIndex = 0;
 	sf::Text OptionsElem;
 
+	// diffItems
 	std::vector<std::pair<sf::Text, Diffucult>> diffItems;
 	int diffIndex = 0;
 	int selectedDiffIndex = 2;
 	sf::Text diffElem;
 
 	// cin 
-
 	std::vector<std::pair<sf::Text, Cin>> cinItems;
 	int cinIndex = 0;
 	sf::Text cinElem;
@@ -94,12 +102,13 @@ struct UI
 
 void initText(UI& ui, Game& game);
 void DrawPlayingUI(UI& ui, Game& game, sf::RenderWindow& window);
+// сортировщик leaderboard по ключам
 std::string GetLeaderboardString(const std::unordered_map<std::string, int>& records);
 void InitializeLeaderBoard(UI& ui);
+
 void UpdateLeaderboardGameOver(UI& ui, int playerScore, std::string name);
 void UpdateMenuState(Game& game, float deltaTime);
 void GameOVERUI(UI& ui, Game& game);
-
 void UpdateLeaderBoard(Game& game, float deltaTime);
 void DrawLeaderBoardUI(UI& ui, sf::RenderWindow& window);
 void StartMenuState(UI& ui);

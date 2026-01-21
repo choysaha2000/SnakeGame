@@ -39,7 +39,7 @@ struct Game
 {
 	math Math;
 	SnakeTextures snakeTexture;
-	UI ui; 
+	UI ui;
 
 	sf::RectangleShape background;
 	sf::RectangleShape wallTop;
@@ -66,7 +66,7 @@ struct Game
 	sf::Texture AppleTexture;
 	int numEatenApples = 0;
 	int scoreEatenApples = 0;
-	int playerRecord = constscoreEatenApples;
+	int playerRecord = 0;
 
 	sf::Music playinStateMusic;
 	sf::SoundBuffer Sound1;
@@ -80,7 +80,7 @@ struct Game
 	bool isSnakeDeath = false;
 	bool isInputActive = false;
 
-
+	// флажки для уровни сложности
 	bool isEasy = false;
 	bool isMiddle = false;
 	bool isHard = false;
@@ -101,9 +101,6 @@ void StartPlayinState(Game& game);
 void UpdateGameOverState(Game& game, float deltaTime);
 void SetGameSettings(Game& game);
 void UpdatePlayingState(Game& game, float deltaTime);
-
-
-
 
 //СТЕК МАШИНА СОСТОЯНИЙ
 

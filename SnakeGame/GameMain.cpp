@@ -12,20 +12,20 @@
 
 int main()
 {
-    Game game; 
+    Game game;
 
     int seed = (int)time(nullptr);
     srand(seed);
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Snake!");
 
- 
+
     InitGame(game);
 
     // Init game clocks
     sf::Clock gameClock;
     float lastTime = gameClock.getElapsedTime().asSeconds();
-   
+
     game.gameFinishTime = 0.0f;
 
 
@@ -34,29 +34,31 @@ int main()
         float currentTime = gameClock.getElapsedTime().asSeconds();
         float deltaTime = currentTime - lastTime;
         lastTime = currentTime;
-   
+
 
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::TextEntered) 
+            if (event.type == sf::Event::TextEntered)
             {
                 if (GetCurrentGameState(game) == GameState::Cin && game.isInputActive)
                 {
 
-                    // cin ivent
+                    // ОБРАБОТКА ВВОДА ИМЕНИ ИГРОКА (ASCII)
                     if (event.text.unicode < 128)
                     {
                         char enteredChar = static_cast<char>(event.text.unicode);
 
+                        // 8 ПО ПОРЯДКУ = BACKSPACE
                         if (enteredChar == 8)
                         {
                             if (!game.tempPlayerName.empty())
                                 game.tempPlayerName.pop_back();
                         }
-                
+                        // В ЭТОМ ПРОМЕЖУТКЕ ТОЛЬКО ПЕЧАТНЫЕ СИМВОЛЫ, ВРОДЕ БУКВ, ЦИФР И ЗНАКОВ
                         else if (enteredChar >= 32 && enteredChar <= 126)
                         {
+                            // ДЛИНА ТЕКСА - 10 СИМВОЛОВ
                             if (game.tempPlayerName.size() < 10)
                                 game.tempPlayerName += enteredChar;
                         }
