@@ -11,8 +11,6 @@ void InitGame(Game& game)
         }
     }
 
- 
-
     if (game.isMusicOn) {
         if (game.playinStateMusic.getStatus() != sf::Music::Playing)
             game.playinStateMusic.play();
@@ -57,14 +55,14 @@ void InitGame(Game& game)
 void StartPlayinState(Game& game)
 {
     game.Math.snakeRect.size = { PLAYER_SIZE, PLAYER_SIZE };
-    
+
     if (!game.isGamePause) {
         game.applePosition = GetRandomPositionInField();
     }
     game.Math.appleCircle.position = game.applePosition;
     game.Math.appleCircle.radius = APPLE_SIZE / 2.f;
     game.AppleSprite.setTexture(game.AppleTexture);
-   SetSpriteRelativeOrigin(game.AppleSprite, 0.5f, 0.5f);
+    SetSpriteRelativeOrigin(game.AppleSprite, 0.5f, 0.5f);
     game.AppleSprite.setPosition(game.applePosition.x, game.applePosition.y);
     game.ui.scoreText.setString("Apples eaten: " + std::to_string(game.scoreEatenApples));
 
@@ -112,8 +110,8 @@ void UpdatePlayingState(Game& game, float deltaTime)
 
             else if (game.isMiddle == true)
             {
-                game.numEatenApples+=2;
-                game.scoreEatenApples+=2;
+                game.numEatenApples += 2;
+                game.scoreEatenApples += 2;
             }
 
             else if (game.isHard == true)
@@ -137,6 +135,7 @@ void UpdatePlayingState(Game& game, float deltaTime)
             {
                 game.numEatenApples += 1;
                 game.scoreEatenApples += 1;
+
             }
 
             if (game.scoreEatenApples > game.playerRecord)
@@ -212,7 +211,7 @@ void UpdateGame(Game& game, float deltaTime)
         UpdateCinState(game, deltaTime);
         break;
     }
- }
+}
 
 void StartGameOverState(Game& game)
 {
@@ -222,7 +221,7 @@ void StartGameOverState(Game& game)
     game.timeSinceGameFinish = 0.f;
 }
 
-void UpdateGameOverState(Game&game, float deltaTime)
+void UpdateGameOverState(Game& game, float deltaTime)
 {
     game.playinStateMusic.stop();
     if (game.timeSinceGameFinish <= PAUSE_LENGTH)
@@ -316,7 +315,7 @@ void SetGameSettings(Game& game)
     game.isSnakeDeath = false;
     game.timeSinceGameFinish = 0.f;
     game.stepTimer = 0.f;
-    game.scoreEatenApples = 0; 
+    game.scoreEatenApples = 0;
 
     game.isEasy = game.gameMode & static_cast <uint32_t> (GameSettingBits::EasyMode);
     game.isMiddle = game.gameMode & static_cast <uint32_t> (GameSettingBits::MiddleMode);
@@ -353,6 +352,7 @@ void SetGameSettings(Game& game)
         game.speed = 20.f;
     }
 
+    // TRANSFORM SNAKE SPEED AFTER DIFFUCULT CHANGES (FRAME-LATENCY. EASY 200 MS, HARD 100 MS AND ETC) 
     game.stepDelay = std::max(0.05f, 0.3f - (game.speed * 0.01f));
 }
 
@@ -422,7 +422,7 @@ void SwitchGameStateInternal(Game& game, GameState oldState, GameState newState)
     case GameState::LeaderBoard: initText(game.ui, game); break;
     case GameState::PauseMenu: PauseState(game.ui, game); break;
     case GameState::Diffcult: StartDiffState(game.ui, game); break;
-    case GameState::Options: OptionsState (game.ui, game); break;
+    case GameState::Options: OptionsState(game.ui, game); break;
     case GameState::Cin: CinState(game.ui, game); break;
     }
 }

@@ -54,7 +54,7 @@ uint8_t CalculateConnectionMask(size_t index)
     return mask;
 }
 
-void UpdateSnakeConnection()  
+void UpdateSnakeConnection()
 {
     for (size_t i = 0; i < snakeSegments.size(); ++i)
     {
@@ -71,7 +71,7 @@ sf::Texture* GetTextureForMask(uint8_t mask, SnakePart part, Game& game) {
     switch (part) {
     case SnakePart::Head: {
         static sf::Texture* headTextures[4] = {
-            &game.snakeTexture.HeadRight,  
+            &game.snakeTexture.HeadRight,
             &game.snakeTexture.HeadUp,    // 1
             &game.snakeTexture.HeadLeft,  // 2 
             &game.snakeTexture.HeadDown   // 3
@@ -85,11 +85,11 @@ sf::Texture* GetTextureForMask(uint8_t mask, SnakePart part, Game& game) {
 
         static sf::Texture* bodyTextures[6] = {
             &game.snakeTexture.BodyTopRight,
-            & game.snakeTexture.BodyVertical,
-            & game.snakeTexture.BodyBottomRight,
-            & game.snakeTexture.BodyTopLeft,
-            & game.snakeTexture.BodyHorizontal,
-            & game.snakeTexture.BodyBottomLeft
+            &game.snakeTexture.BodyVertical,
+            &game.snakeTexture.BodyBottomRight,
+            &game.snakeTexture.BodyTopLeft,
+            &game.snakeTexture.BodyHorizontal,
+            &game.snakeTexture.BodyBottomLeft
         };
         return type >= 4 ? bodyTextures[type - 4] : &game.snakeTexture.BodyVertical;
     }
@@ -100,9 +100,9 @@ sf::Texture* GetTextureForMask(uint8_t mask, SnakePart part, Game& game) {
 
         static sf::Texture* tailTextures[4] = {
             &game.snakeTexture.TailUp,
-            & game.snakeTexture.TailRight,
-            & game.snakeTexture.TailDown,
-            & game.snakeTexture.TailLeft
+            &game.snakeTexture.TailRight,
+            &game.snakeTexture.TailDown,
+            &game.snakeTexture.TailLeft
         };
         return type < 4 ? tailTextures[type] : &game.snakeTexture.TailDown;
     }
@@ -113,7 +113,7 @@ sf::Texture* GetTextureForMask(uint8_t mask, SnakePart part, Game& game) {
 float GetRotationForMask(uint8_t mask, SnakePart part)
 {
     if (part == SnakePart::Tail) {
-        return 180.f; 
+        return 180.f;
     }
     return 0.f;
 }
@@ -150,10 +150,10 @@ void InitSnake(Game& game)
             (i == snakeSegments.size() - 1) ? SnakePart::Tail :
             SnakePart::Body;
 
-       // first set texture
+        // first set texture
         snakeSegments[i].snakeSprite.setTexture(
             *GetTextureForMask(snakeSegments[i].connectionMask, part, game),
-            true  
+            true
         );
 
 
@@ -162,7 +162,7 @@ void InitSnake(Game& game)
         // then set origin
         SetSpriteRelativeOrigin(snakeSegments[i].snakeSprite, 0.5f, 0.5f);
 
-       // then rotation and position
+        // then rotation and position
         snakeSegments[i].snakeSprite.setRotation(
             GetRotationForMask(snakeSegments[i].connectionMask, part)
         );
@@ -175,76 +175,76 @@ void InitSnake(Game& game)
     }
 }
 
-	void UpdateSnake(float deltaTime, Game& game) {
-		if (snakeSegments.empty()) return;
+void UpdateSnake(float deltaTime, Game& game) {
+    if (snakeSegments.empty()) return;
 
-	    // key sets
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) &&
-			snakeSegments[0].snakeDirection != PlayerDirection::Left)
-			snakeSegments[0].snakeDirection = PlayerDirection::Right;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) &&
-			snakeSegments[0].snakeDirection != PlayerDirection::Right)
-			snakeSegments[0].snakeDirection = PlayerDirection::Left;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) &&
-			snakeSegments[0].snakeDirection != PlayerDirection::Down)
-			snakeSegments[0].snakeDirection = PlayerDirection::Up;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) &&
-			snakeSegments[0].snakeDirection != PlayerDirection::Up)
-			snakeSegments[0].snakeDirection = PlayerDirection::Down;
+    // key sets
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) &&
+        snakeSegments[0].snakeDirection != PlayerDirection::Left)
+        snakeSegments[0].snakeDirection = PlayerDirection::Right;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) &&
+        snakeSegments[0].snakeDirection != PlayerDirection::Right)
+        snakeSegments[0].snakeDirection = PlayerDirection::Left;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) &&
+        snakeSegments[0].snakeDirection != PlayerDirection::Down)
+        snakeSegments[0].snakeDirection = PlayerDirection::Up;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) &&
+        snakeSegments[0].snakeDirection != PlayerDirection::Up)
+        snakeSegments[0].snakeDirection = PlayerDirection::Down;
 
-		// segments moving
-		for (size_t i = snakeSegments.size() - 1; i > 0; --i) {
-			snakeSegments[i].snakePosition = snakeSegments[i - 1].snakePosition;
-		}
-
-		// head moving
-		switch (snakeSegments[0].snakeDirection) {
-		case PlayerDirection::Right: snakeSegments[0].snakePosition.x += PLAYER_SIZE; break;
-		case PlayerDirection::Left:  snakeSegments[0].snakePosition.x -= PLAYER_SIZE; break;
-		case PlayerDirection::Up:    snakeSegments[0].snakePosition.y -= PLAYER_SIZE; break;
-		case PlayerDirection::Down:  snakeSegments[0].snakePosition.y += PLAYER_SIZE; break;
-		}
-
-		// refresh position and connection
-		for (size_t i = 0; i < snakeSegments.size(); ++i) {
-			snakeSegments[i].snakeSprite.setPosition(
-				snakeSegments[i].snakePosition.x,
-				snakeSegments[i].snakePosition.y
-			);
-		}
-
-		// refresh mask connection
-		UpdateSnakeConnection();
-
-		// refresh textur only for changed segments
-		for (size_t i = 0; i < snakeSegments.size(); ++i) {
-			if (snakeSegments[i].needsUpdate) {
-				SnakePart part = (i == 0) ? SnakePart::Head :
-					(i == snakeSegments.size() - 1) ? SnakePart::Tail :
-					SnakePart::Body;
-
-				snakeSegments[i].snakeSprite.setTexture(
-					*GetTextureForMask(snakeSegments[i].connectionMask, part, game),
-					true
-				);
-				snakeSegments[i].snakeSprite.setRotation(
-					GetRotationForMask(snakeSegments[i].connectionMask, part)
-				);
-				snakeSegments[i].needsUpdate = false;
-			}
-		}
-	}
-
-	void DrawSnake(sf::RenderWindow& window) {
-		for (const auto& segment : snakeSegments) {
-			window.draw(segment.snakeSprite);
-		}
-	}
-
-    void SpawnSnake(Game& game)
-    {
-        game.Math.snakeRect.position = {
-        snakeSegments[0].snakePosition.x - PLAYER_SIZE / 2.f,
-        snakeSegments[0].snakePosition.y - PLAYER_SIZE / 2.f
-        };
+    // segments moving
+    for (size_t i = snakeSegments.size() - 1; i > 0; --i) {
+        snakeSegments[i].snakePosition = snakeSegments[i - 1].snakePosition;
     }
+
+    // head moving
+    switch (snakeSegments[0].snakeDirection) {
+    case PlayerDirection::Right: snakeSegments[0].snakePosition.x += PLAYER_SIZE; break;
+    case PlayerDirection::Left:  snakeSegments[0].snakePosition.x -= PLAYER_SIZE; break;
+    case PlayerDirection::Up:    snakeSegments[0].snakePosition.y -= PLAYER_SIZE; break;
+    case PlayerDirection::Down:  snakeSegments[0].snakePosition.y += PLAYER_SIZE; break;
+    }
+
+    // refresh position and connection
+    for (size_t i = 0; i < snakeSegments.size(); ++i) {
+        snakeSegments[i].snakeSprite.setPosition(
+            snakeSegments[i].snakePosition.x,
+            snakeSegments[i].snakePosition.y
+        );
+    }
+
+    // refresh mask connection
+    UpdateSnakeConnection();
+
+    // refresh textur only for changed segments
+    for (size_t i = 0; i < snakeSegments.size(); ++i) {
+        if (snakeSegments[i].needsUpdate) {
+            SnakePart part = (i == 0) ? SnakePart::Head :
+                (i == snakeSegments.size() - 1) ? SnakePart::Tail :
+                SnakePart::Body;
+
+            snakeSegments[i].snakeSprite.setTexture(
+                *GetTextureForMask(snakeSegments[i].connectionMask, part, game),
+                true
+            );
+            snakeSegments[i].snakeSprite.setRotation(
+                GetRotationForMask(snakeSegments[i].connectionMask, part)
+            );
+            snakeSegments[i].needsUpdate = false;
+        }
+    }
+}
+
+void DrawSnake(sf::RenderWindow& window) {
+    for (const auto& segment : snakeSegments) {
+        window.draw(segment.snakeSprite);
+    }
+}
+
+void SpawnSnake(Game& game)
+{
+    game.Math.snakeRect.position = {
+    snakeSegments[0].snakePosition.x - PLAYER_SIZE / 2.f,
+    snakeSegments[0].snakePosition.y - PLAYER_SIZE / 2.f
+    };
+}

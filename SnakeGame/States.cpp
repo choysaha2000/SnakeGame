@@ -10,7 +10,7 @@ void PauseState(UI& ui, Game& game)
 	ui.PauseMenuPlay.setString("Space to play");
 	ui.PauseMenuPlay.setPosition(
 		(SCREEN_WIDTH - ui.PauseMenuPlay.getGlobalBounds().width) / 2.f,
-		SCREEN_HEIGHT - ui.PauseMenuPlay.getGlobalBounds().height - bottomPadding
+		SCREEN_HEIGHT - ui.PauseMenuPlay.getGlobalBounds().height - 50.f
 	);
 	ui.PauseMenuMenu.setFont(ui.font);
 	ui.PauseMenuMenu.setCharacterSize(30);
@@ -18,7 +18,7 @@ void PauseState(UI& ui, Game& game)
 	ui.PauseMenuMenu.setString("Backspace to menu");
 	ui.PauseMenuMenu.setPosition(
 		(SCREEN_WIDTH - ui.PauseMenuMenu.getGlobalBounds().width) / 2.f,
-		ui.PauseMenuPlay.getPosition().y - ui.PauseMenuMenu.getGlobalBounds().height - spacing
+		ui.PauseMenuPlay.getPosition().y - ui.PauseMenuMenu.getGlobalBounds().height - 20.f
 	);
 
 	ui.PauseMenuElement.setFont(ui.font);
@@ -156,11 +156,11 @@ void DrawCinUI(UI& ui, Game& game, sf::RenderWindow& window)
 {
 	if (game.isInputActive)
 	{
-		// РИСУЕМ ПОЛЕ ВВОДА
+		// FIELD OF ENTER NAME
 		ui.cinElem.setString("ENTER NAME: " + game.tempPlayerName + "_");
 		ui.cinElem.setFillColor(sf::Color::White);
 
-		// Центрируем
+		// SET POSITION ON CENTER
 		ui.cinElem.setPosition(
 			(SCREEN_WIDTH - ui.cinElem.getGlobalBounds().width) / 2.f,
 			SCREEN_HEIGHT / 2.f
@@ -169,8 +169,8 @@ void DrawCinUI(UI& ui, Game& game, sf::RenderWindow& window)
 	}
 	else
 	{
-		// РИСУЕМ МЕНЮ YES/NO (Твой старый код)
-		ui.cinElem.setString("PRESS YOUR NAME"); // Вернем заголовок
+
+		ui.cinElem.setString("PRESS YOUR NAME");
 		ui.cinElem.setFillColor(sf::Color::Red);
 		ui.cinElem.setPosition(
 			(SCREEN_WIDTH - ui.cinElem.getGlobalBounds().width) / 2.f,
@@ -310,7 +310,7 @@ void StartMenuState(UI& ui)
 	setTextParameters(tLeader, "LEADERBOARD", 30, sf::Color::White);
 	setTextParameters(tExit, "EXIT", 30, sf::Color::White);
 
-	// Позиционируем (вертикально друг под другом)
+
 	tStart.setPosition((SCREEN_WIDTH - tStart.getGlobalBounds().width) / 2.f, SCREEN_HEIGHT / 2.f);
 	tDiff.setPosition((SCREEN_WIDTH - tDiff.getGlobalBounds().width) / 2.f, SCREEN_HEIGHT / 2.f + 50.f);
 	tOptions.setPosition((SCREEN_WIDTH - tOptions.getGlobalBounds().width) / 2.f, SCREEN_HEIGHT / 2.f + 100.f);
@@ -323,7 +323,7 @@ void StartMenuState(UI& ui)
 	ui.menuItems.push_back({ tLeader, MenuItem::Leaderboard });
 	ui.menuItems.push_back({ tExit, MenuItem::Exit });
 
-	ui.menuIndex = 0; // Сбрасываем выбор на первый пункт
+	ui.menuIndex = 0; // START INDEX IN ZERO ELEMENT 
 
 }
 void UpdateMenuState(Game& game, float deltaTime)
@@ -374,25 +374,24 @@ void UpdateMenuState(Game& game, float deltaTime)
 }
 void DrawMenuUI(UI& ui, sf::RenderWindow& window)
 {
-	window.draw(ui.menuText); // Заголовок
+	window.draw(ui.menuText);
 
-	// Пробегаем по вектору
 	for (int i = 0; i < ui.menuItems.size(); ++i) {
 		sf::Text& text = ui.menuItems[i].first;
 
-		// Красим текущий элемент
+
 		if (i == ui.menuIndex) {
-			text.setFillColor(sf::Color::Yellow); // Активный
+			text.setFillColor(sf::Color::Yellow);
 		}
 		else {
-			text.setFillColor(sf::Color::White);  // Обычный
+			text.setFillColor(sf::Color::White);
 		}
 
 		window.draw(text);
 	}
 }
 
-// Diff
+
 void StartDiffState(UI& ui, Game& game)
 {
 	ui.diffItems.clear();
@@ -443,7 +442,7 @@ void StartDiffState(UI& ui, Game& game)
 	else if (game.gameMode & (uint32_t)GameSettingBits::VeryHardMode) ui.selectedDiffIndex = 3;
 	else if (game.gameMode & (uint32_t)GameSettingBits::HardcoreMode) ui.selectedDiffIndex = 4;
 
-	ui.diffIndex = 0; // Сбрасываем выбор на первый пункт
+	ui.diffIndex = 0;
 }
 void UpdateDiffState(Game& game, float deltaTime)
 {
@@ -472,17 +471,17 @@ void UpdateDiffState(Game& game, float deltaTime)
 	{
 		Diffucult selectedItem = game.ui.diffItems[game.ui.diffIndex].second;
 
-		// Если нажали Back - выходим
+
 		if (selectedItem == Diffucult::Back)
 		{
 			SwitchGameState(game, GameState::Menu);
 		}
 		else
 		{
-			// иначе просто запоминаем выбор
+
 			game.ui.selectedDiffIndex = game.ui.diffIndex;
 
-			// И применяем настройки сразу
+
 			game.gameMode = 0;
 
 			switch (selectedItem)

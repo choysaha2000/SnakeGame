@@ -44,10 +44,9 @@ void GameOVERUI(UI& ui, Game& game)
 		textRect.top + textRect.height / 2.f
 	);
 
-	// Просто ставим текст в центр экрана
 	ui.gameOverText.setPosition(SCREEN_WIDTH / 2.f, SCREEN_HEIGHT / 2.f);
 }
-void UpdateLeaderboardGameOver (UI& ui, int playerScore, std::string name)
+void UpdateLeaderboardGameOver(UI& ui, int playerScore, std::string name)
 {
 
 	const std::string PLAYER_NAME = name;
@@ -58,14 +57,14 @@ void UpdateLeaderboardGameOver (UI& ui, int playerScore, std::string name)
 	ui.gameOverText.setString(leaderBoardText);
 	ui.gameOverText.setCharacterSize(18);
 	ui.gameOverText.setFont(ui.font);
-	ui.gameOverText.setOrigin(0.f, 0.f); 
-	ui.gameOverText.setPosition(50.f, 100.f); 
+	ui.gameOverText.setOrigin(0.f, 0.f);
+	ui.gameOverText.setPosition(50.f, 100.f);
 
 }
 void DrawPlayingUI(UI& ui, Game& game, sf::RenderWindow& window)
 {
 
-	
+
 
 	window.draw(ui.scoreText);
 	window.draw(ui.PlayerRecord);
