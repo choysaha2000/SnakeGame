@@ -4,5 +4,6 @@ Bob 3
 Carol 5
 vasya 8
 vasya2 6
-Player 2
- 0
+Player 7
+vasya3 14
+ 14

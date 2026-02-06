@@ -64,6 +64,16 @@ int main()
                 }
             }
         }
+        if (event.type == sf::Event::Closed)
+        {
+            window.close();
+            break;
+        }
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+        {
+            window.close();
+            break;
+        }
 
         UpdateGame(game, deltaTime);
 
